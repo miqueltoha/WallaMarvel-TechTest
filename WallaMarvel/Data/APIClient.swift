@@ -1,7 +1,7 @@
 import Foundation
 
 protocol APIClientProtocol {
-    func getHeroes(completionBlock: @escaping (CharacterDataContainer) -> Void)
+    func getHeroes(completionBlock: @escaping (Result<CharacterDataContainer, Error>) -> Void)
 }
 
 final class APIClient: APIClientProtocol {
@@ -11,8 +11,8 @@ final class APIClient: APIClientProtocol {
     }
     
     init() { }
-    
-    func getHeroes(completionBlock: @escaping (CharacterDataContainer) -> Void) {
+  
+    func getHeroes(completionBlock: @escaping (Result<CharacterDataContainer, Error>) -> Void) {
         let ts = String(Int(Date().timeIntervalSince1970))
         let privateKey = Constant.privateKey
         let publicKey = Constant.publicKey
@@ -28,11 +28,22 @@ final class APIClient: APIClientProtocol {
         }
         
         let urlRequest = URLRequest(url: urlComponent!.url!)
-        
         URLSession.shared.dataTask(with: urlRequest) { data, response, error in
-            let dataModel = try! JSONDecoder().decode(CharacterDataContainer.self, from: data!)
-            completionBlock(dataModel)
-            print(dataModel)
+            guard let data = data else {
+                print("No data received:", error ?? "Unknown error")
+                return
+            }
+        
+            do {
+                let dataModel = try JSONDecoder().decode(CharacterDataContainer.self, from: data)
+                completionBlock(.success(dataModel))
+            } catch {
+                print("Decoding error:", error)
+                if let rawResponse = String(data: data, encoding: .utf8) {
+                  print("Raw response:", rawResponse)
+                }
+                completionBlock(.failure(error))
+            }
         }.resume()
     }
 }

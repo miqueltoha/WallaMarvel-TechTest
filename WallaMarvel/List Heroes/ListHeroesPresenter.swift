@@ -25,9 +25,14 @@ final class ListHeroesPresenter: ListHeroesPresenterProtocol {
     // MARK: UseCases
     
     func getHeroes() {
-        getHeroesUseCase.execute { characterDataContainer in
-            print("Characters \(characterDataContainer.characters)")
-            self.ui?.update(heroes: characterDataContainer.characters)
+        getHeroesUseCase.execute { [weak self] result in
+            switch result {
+            case .success(let characterDataContainer):
+                self?.ui?.update(heroes: characterDataContainer.characters)
+
+            case .failure(let error):
+                print("Failed loading characters:", error)
+            }
         }
     }
 }

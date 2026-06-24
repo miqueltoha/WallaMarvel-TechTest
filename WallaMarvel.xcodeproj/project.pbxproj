@@ -72,6 +72,7 @@
 		1A821ED72863081A0024D397 /* MarvelRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarvelRepository.swift; sourceTree = "<group>"; };
 		1A821ED92863096C0024D397 /* ListHeroesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListHeroesPresenter.swift; sourceTree = "<group>"; };
 		1AC0347E2863214900E93178 /* GetHeroes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetHeroes.swift; sourceTree = "<group>"; };
+		C168E6CA2FEC2EB700124C02 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +104,7 @@
 		1A0E3A8C2862F7E200132FCB = {
 			isa = PBXGroup;
 			children = (
+				C168E6CA2FEC2EB700124C02 /* README.md */,
 				1A0E3A972862F7E200132FCB /* WallaMarvel */,
 				1A0E3AAE2862F7E300132FCB /* WallaMarvelTests */,
 				1A0E3AB82862F7E300132FCB /* WallaMarvelUITests */,
