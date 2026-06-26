@@ -11,13 +11,13 @@ import Foundation
 extension CharacterDataContainer {
 
     static func mock(
-        characters: [CharacterDataModel] = [.mock()]
+        characters: [CharacterDataModel] = [.mock()],
+        pages: Int = 1
     ) -> CharacterDataContainer {
-
         CharacterDataContainer(
             info: PageInfoDataModel(
                 count: characters.count,
-                pages: 1,
+                pages: pages,
                 next: nil,
                 prev: nil
             ),
