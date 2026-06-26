@@ -123,7 +123,6 @@
 				C168E6CA2FEC2EB700124C02 /* README.md */,
 				1A0E3A972862F7E200132FCB /* WallaMarvel */,
 				1A0E3AAE2862F7E300132FCB /* WallaMarvelTests */,
-				C168E6DB2FEEA28A00124C02 /* Helpers */,
 				1A0E3AB82862F7E300132FCB /* WallaMarvelUITests */,
 				1A0E3A962862F7E200132FCB /* Products */,
 			);
@@ -161,6 +160,7 @@
 				1A0E3AAF2862F7E300132FCB /* WallaMarvelTests.swift */,
 				C168E6D52FEEA21800124C02 /* Presenter */,
 				C168E6D62FEEA22C00124C02 /* Mocks */,
+				C168E6DB2FEEA28A00124C02 /* Helpers */,
 			);
 			path = WallaMarvelTests;
 			sourceTree = "<group>";
