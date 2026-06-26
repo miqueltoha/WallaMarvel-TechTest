@@ -35,6 +35,7 @@
 		C168E6DD2FEEA2BB00124C02 /* CharacterDataModel+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C168E6DC2FEEA2BB00124C02 /* CharacterDataModel+Mock.swift */; };
 		C168E6DF2FEEA30500124C02 /* ApiClientMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C168E6DE2FEEA30500124C02 /* ApiClientMock.swift */; };
 		C168E6E12FEEA32000124C02 /* CharacterDataContainer+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C168E6E02FEEA32000124C02 /* CharacterDataContainer+Mock.swift */; };
+		C168E6E32FEEA80F00124C02 /* MockError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C168E6E22FEEA80F00124C02 /* MockError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +88,7 @@
 		C168E6DC2FEEA2BB00124C02 /* CharacterDataModel+Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CharacterDataModel+Mock.swift"; sourceTree = "<group>"; };
 		C168E6DE2FEEA30500124C02 /* ApiClientMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiClientMock.swift; sourceTree = "<group>"; };
 		C168E6E02FEEA32000124C02 /* CharacterDataContainer+Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CharacterDataContainer+Mock.swift"; sourceTree = "<group>"; };
+		C168E6E22FEEA80F00124C02 /* MockError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -244,6 +246,7 @@
 				C168E6D72FEEA26A00124C02 /* GetHeroesUseCaseMock.swift */,
 				C168E6D92FEEA28200124C02 /* ListHeroesUIMock.swift */,
 				C168E6DE2FEEA30500124C02 /* ApiClientMock.swift */,
+				C168E6E22FEEA80F00124C02 /* MockError.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -419,6 +422,7 @@
 				C168E6D82FEEA26A00124C02 /* GetHeroesUseCaseMock.swift in Sources */,
 				C168E6E12FEEA32000124C02 /* CharacterDataContainer+Mock.swift in Sources */,
 				1A0E3AB02862F7E300132FCB /* WallaMarvelTests.swift in Sources */,
+				C168E6E32FEEA80F00124C02 /* MockError.swift in Sources */,
 				C168E6DA2FEEA28200124C02 /* ListHeroesUIMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
