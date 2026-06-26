@@ -89,3 +89,13 @@ Mocks are used for the Use Case and UI layers to isolate Presenter behaviour.
 ## Notes
 
 The goal of this implementation was to preserve the original project structure while improving robustness, testability and functionality with the minimum architectural impact.
+
+## Decisions
+
+I decided to preserve the existing MVP + Clean Architecture instead of replacing it with another architecture because I considered it more valuable to improve robustness, testability and requested features while minimizing unnecessary structural changes.
+
+## Concurrency
+
+The project currently keeps the original callback-based networking approach to preserve the existing architecture and minimize unnecessary changes.
+
+A future improvement would be migrating the networking layer and use cases to Swift Concurrency (`async/await`) and enabling strict concurrency checks once the architecture boundaries are fully adapted.
