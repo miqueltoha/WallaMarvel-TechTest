@@ -29,6 +29,12 @@
 		C168E6CE2FEE808D00124C02 /* PageInfoDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C168E6CD2FEE808D00124C02 /* PageInfoDataModel.swift */; };
 		C168E6D02FEE80E000124C02 /* CharacterLocationDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C168E6CF2FEE80E000124C02 /* CharacterLocationDataModel.swift */; };
 		C168E6D22FEE85DB00124C02 /* CharacterDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C168E6D12FEE85DB00124C02 /* CharacterDetailViewController.swift */; };
+		C168E6D42FEEA19400124C02 /* ListHeroesPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C168E6D32FEEA19400124C02 /* ListHeroesPresenterTests.swift */; };
+		C168E6D82FEEA26A00124C02 /* GetHeroesUseCaseMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C168E6D72FEEA26A00124C02 /* GetHeroesUseCaseMock.swift */; };
+		C168E6DA2FEEA28200124C02 /* ListHeroesUIMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C168E6D92FEEA28200124C02 /* ListHeroesUIMock.swift */; };
+		C168E6DD2FEEA2BB00124C02 /* CharacterDataModel+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C168E6DC2FEEA2BB00124C02 /* CharacterDataModel+Mock.swift */; };
+		C168E6DF2FEEA30500124C02 /* ApiClientMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C168E6DE2FEEA30500124C02 /* ApiClientMock.swift */; };
+		C168E6E12FEEA32000124C02 /* CharacterDataContainer+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C168E6E02FEEA32000124C02 /* CharacterDataContainer+Mock.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +81,12 @@
 		C168E6CD2FEE808D00124C02 /* PageInfoDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageInfoDataModel.swift; sourceTree = "<group>"; };
 		C168E6CF2FEE80E000124C02 /* CharacterLocationDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterLocationDataModel.swift; sourceTree = "<group>"; };
 		C168E6D12FEE85DB00124C02 /* CharacterDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDetailViewController.swift; sourceTree = "<group>"; };
+		C168E6D32FEEA19400124C02 /* ListHeroesPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListHeroesPresenterTests.swift; sourceTree = "<group>"; };
+		C168E6D72FEEA26A00124C02 /* GetHeroesUseCaseMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetHeroesUseCaseMock.swift; sourceTree = "<group>"; };
+		C168E6D92FEEA28200124C02 /* ListHeroesUIMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListHeroesUIMock.swift; sourceTree = "<group>"; };
+		C168E6DC2FEEA2BB00124C02 /* CharacterDataModel+Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CharacterDataModel+Mock.swift"; sourceTree = "<group>"; };
+		C168E6DE2FEEA30500124C02 /* ApiClientMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiClientMock.swift; sourceTree = "<group>"; };
+		C168E6E02FEEA32000124C02 /* CharacterDataContainer+Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CharacterDataContainer+Mock.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +121,7 @@
 				C168E6CA2FEC2EB700124C02 /* README.md */,
 				1A0E3A972862F7E200132FCB /* WallaMarvel */,
 				1A0E3AAE2862F7E300132FCB /* WallaMarvelTests */,
+				C168E6DB2FEEA28A00124C02 /* Helpers */,
 				1A0E3AB82862F7E300132FCB /* WallaMarvelUITests */,
 				1A0E3A962862F7E200132FCB /* Products */,
 			);
@@ -144,6 +157,8 @@
 			isa = PBXGroup;
 			children = (
 				1A0E3AAF2862F7E300132FCB /* WallaMarvelTests.swift */,
+				C168E6D52FEEA21800124C02 /* Presenter */,
+				C168E6D62FEEA22C00124C02 /* Mocks */,
 			);
 			path = WallaMarvelTests;
 			sourceTree = "<group>";
@@ -213,6 +228,33 @@
 				1AC0347E2863214900E93178 /* GetHeroes.swift */,
 			);
 			path = UseCases;
+			sourceTree = "<group>";
+		};
+		C168E6D52FEEA21800124C02 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				C168E6D32FEEA19400124C02 /* ListHeroesPresenterTests.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		C168E6D62FEEA22C00124C02 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				C168E6D72FEEA26A00124C02 /* GetHeroesUseCaseMock.swift */,
+				C168E6D92FEEA28200124C02 /* ListHeroesUIMock.swift */,
+				C168E6DE2FEEA30500124C02 /* ApiClientMock.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
+		C168E6DB2FEEA28A00124C02 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				C168E6DC2FEEA2BB00124C02 /* CharacterDataModel+Mock.swift */,
+				C168E6E02FEEA32000124C02 /* CharacterDataContainer+Mock.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -371,7 +413,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C168E6D42FEEA19400124C02 /* ListHeroesPresenterTests.swift in Sources */,
+				C168E6DF2FEEA30500124C02 /* ApiClientMock.swift in Sources */,
+				C168E6DD2FEEA2BB00124C02 /* CharacterDataModel+Mock.swift in Sources */,
+				C168E6D82FEEA26A00124C02 /* GetHeroesUseCaseMock.swift in Sources */,
+				C168E6E12FEEA32000124C02 /* CharacterDataContainer+Mock.swift in Sources */,
 				1A0E3AB02862F7E300132FCB /* WallaMarvelTests.swift in Sources */,
+				C168E6DA2FEEA28200124C02 /* ListHeroesUIMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
