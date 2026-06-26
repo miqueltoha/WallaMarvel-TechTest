@@ -65,5 +65,10 @@ final class ListHeroesTableViewCell: UITableViewCell {
         }
         
         heroeImageView.kf.setImage(with: url)
+        
+        // Accessibility
+        isAccessibilityElement = true
+        accessibilityLabel = "\(model.name), \(model.species), \(model.status)"
+        accessibilityTraits = .button
     }
 }

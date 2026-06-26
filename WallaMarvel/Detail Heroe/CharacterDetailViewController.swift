@@ -40,6 +40,10 @@ final class CharacterDetailViewController: UIViewController {
         imageView.layer.cornerRadius = 12
         imageView.translatesAutoresizingMaskIntoConstraints = false
 
+        // Accessibility
+        imageView.isAccessibilityElement = true
+        imageView.accessibilityTraits = .image
+
         stackView.axis = .vertical
         stackView.spacing = 12
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -58,8 +62,9 @@ final class CharacterDetailViewController: UIViewController {
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24)
         ])
     }
-
+    
     private func configure() {
+        imageView.accessibilityLabel = "\(character.name) image"
         imageView.kf.setImage(with: URL(string: character.image))
 
         addInfo(title: "Status", value: character.status)
