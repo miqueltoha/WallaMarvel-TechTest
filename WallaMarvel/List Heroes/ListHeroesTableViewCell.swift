@@ -25,6 +25,14 @@ final class ListHeroesTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        heroeImageView.kf.cancelDownloadTask()
+        heroeImageView.image = nil
+        heroeName.text = nil
+    }
+    
     private func setup() {
         addSubviews()
         addContraints()
@@ -41,7 +49,7 @@ final class ListHeroesTableViewCell: UITableViewCell {
             heroeImageView.topAnchor.constraint(equalTo: topAnchor, constant: 12),
             heroeImageView.heightAnchor.constraint(equalToConstant: 80),
             heroeImageView.widthAnchor.constraint(equalToConstant: 80),
-            heroeImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12),
+            heroeImageView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -12),
             
             heroeName.leadingAnchor.constraint(equalTo: heroeImageView.trailingAnchor, constant: 12),
             heroeName.topAnchor.constraint(equalTo: heroeImageView.topAnchor, constant: 8),
@@ -49,7 +57,13 @@ final class ListHeroesTableViewCell: UITableViewCell {
     }
     
     func configure(model: CharacterDataModel) {
-        heroeImageView.kf.setImage(with: URL(string: model.image))
         heroeName.text = model.name
+        
+        guard let url = URL(string: model.image) else {
+            heroeImageView.image = nil
+            return
+        }
+        
+        heroeImageView.kf.setImage(with: url)
     }
 }

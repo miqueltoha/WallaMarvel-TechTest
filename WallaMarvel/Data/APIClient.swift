@@ -54,6 +54,11 @@ final class APIClient: APIClientProtocol {
                 return
             }
             
+            if httpResponse.statusCode == 404 {
+                completionBlock(.failure(URLError(.fileDoesNotExist)))
+                return
+            }
+            
             guard (200...299).contains(httpResponse.statusCode) else {
                 completionBlock(.failure(URLError(.badServerResponse)))
                 return

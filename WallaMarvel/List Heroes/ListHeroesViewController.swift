@@ -57,6 +57,8 @@ extension ListHeroesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let totalRows = listHeroesProvider?.heroes.count ?? 0
         
+        guard totalRows > 0 else { return }
+        
         if indexPath.row == totalRows - 3 {
             presenter?.loadNextPage()
         }

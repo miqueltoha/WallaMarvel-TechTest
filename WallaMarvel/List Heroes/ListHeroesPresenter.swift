@@ -41,8 +41,7 @@ final class ListHeroesPresenter: ListHeroesPresenterProtocol {
     func loadNextPage() {
         guard !isLoading, currentPage < totalPages else { return }
 
-        currentPage += 1
-        loadCharacters(page: currentPage, name: currentSearchText)
+        loadCharacters(page: currentPage + 1, name: currentSearchText)
     }
 
     private func loadCharacters(page: Int, name: String?) {
@@ -56,6 +55,7 @@ final class ListHeroesPresenter: ListHeroesPresenterProtocol {
 
                 switch result {
                 case .success(let characterDataContainer):
+                    self.currentPage = page
                     self.totalPages = characterDataContainer.info.pages
 
                     if page == 1 {
@@ -67,8 +67,11 @@ final class ListHeroesPresenter: ListHeroesPresenterProtocol {
                     self.ui?.update(heroes: self.characters)
 
                 case .failure(let error):
-                    print("Failed loading characters:", error)
-
+                    #if DEBUG
+                    if page == 1 {
+                        print("Failed loading characters: ", error)
+                    }
+                    #endif
                     if page == 1 {
                         self.characters = []
                         self.ui?.update(heroes: [])

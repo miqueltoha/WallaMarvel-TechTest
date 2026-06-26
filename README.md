@@ -4,33 +4,88 @@
 
 This project was originally built on top of Marvel's public API.
 
-Since the Marvel endpoint is currently not returning the expected payload, the application will be migrated to the Rick and Morty API while preserving the original use case: list, search and detail navigation for characters.
+At the time of implementation, the Marvel endpoint was consistently returning:
 
-The Marvel API currently returns `{"message": "Internal server error"}`, so the original decoder fails because the expected `data` key is missing.
+```json
+{"message": "Internal server error"}
+```
+
+Because the application relied on the Marvel response schema, it crashed while decoding the response.
+
+To keep the original user experience and complete the assessment, the networking layer was migrated to the Rick and Morty API while preserving the existing architecture and application flow.
+
+---
 
 ## Initial Assessment
 
 ### Crash on startup
 
-The original implementation crashes when decoding the API response because it relies on:
+The original implementation crashed during decoding because it relied on:
 
-- `try!`
-- force unwrapping (`!`)
+* `try!`
+* Force unwrapping (`!`)
 
-When the Marvel API does not return the expected schema, the application terminates with a decoding error (`keyNotFound`).
+When the Marvel API returned an unexpected payload, the application terminated with a `DecodingError.keyNotFound`.
 
-### Architecture
+### Architecture observations
 
-- Networking layer is tightly coupled to the Marvel API response schema.
-- Error handling is currently missing.
-- APIClient directly exposes Marvel-specific models.
+* Networking layer tightly coupled to the Marvel response model.
+* No networking error handling.
+* Unsafe decoding.
+* No automated tests.
 
-## Implementation Plan
+---
 
-- [ ] Replace Marvel API with Rick and Morty API
-- [ ] Improve networking error handling
-- [ ] Add unit tests
-- [ ] Implement character detail screen
-- [ ] Implement pagination
-- [ ] Implement search
-- [ ] Review accessibility support
+## Implemented Changes
+
+* ✅ Replaced the Marvel API with the Rick and Morty API.
+* ✅ Introduced safe networking using `Result`.
+* ✅ Removed force unwrapping and `try!`.
+* ✅ Added proper HTTP and decoding error handling.
+* ✅ Implemented Character Detail screen.
+* ✅ Added character search.
+* ✅ Added infinite pagination.
+* ✅ Added Presenter unit tests using mocks.
+
+---
+
+## Architecture
+
+The existing architecture has been preserved.
+
+The project follows a layered approach:
+
+* Presentation
+* Domain (Use Cases)
+* Repository
+* Data Source
+* API Client
+
+Dependencies are injected through protocols to improve testability.
+
+---
+
+## Testing
+
+Unit tests have been added for the Presenter covering:
+
+* Successful character loading
+* Error handling
+* Character search
+* Pagination flow
+
+Mocks are used for the Use Case and UI layers to isolate Presenter behaviour.
+
+---
+
+## Possible Future Improvements
+
+* Loading indicator during pagination.
+* Dedicated empty and error states.
+* APIClient unit tests.
+* Image placeholders and retry strategy.
+* Accessibility improvements.
+
+## Notes
+
+The goal of this implementation was to preserve the original project structure while improving robustness, testability and functionality with the minimum architectural impact.
