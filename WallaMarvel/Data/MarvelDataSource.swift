@@ -3,6 +3,7 @@ import Foundation
 protocol MarvelDataSourceProtocol {
     func getHeroes(
         name: String?,
+        page: Int,
         completionBlock: @escaping (Result<CharacterDataContainer, Error>) -> Void
     )
 }
@@ -16,8 +17,9 @@ final class MarvelDataSource: MarvelDataSourceProtocol {
     
     func getHeroes(
         name: String?,
+        page: Int,
         completionBlock: @escaping (Result<CharacterDataContainer, Error>) -> Void
     ) {
-        apiClient.getHeroes(name: name, completionBlock: completionBlock)
+        apiClient.getHeroes(name: name, page: page, completionBlock: completionBlock)
     }
 }

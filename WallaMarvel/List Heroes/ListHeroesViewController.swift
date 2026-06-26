@@ -53,6 +53,14 @@ extension ListHeroesViewController: UITableViewDelegate {
         let detailViewController = CharacterDetailViewController(character: character)
         navigationController?.pushViewController(detailViewController, animated: true)
     }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let totalRows = listHeroesProvider?.heroes.count ?? 0
+        
+        if indexPath.row == totalRows - 3 {
+            presenter?.loadNextPage()
+        }
+    }
 }
 
 extension ListHeroesViewController: UISearchResultsUpdating {

@@ -3,6 +3,7 @@ import Foundation
 protocol APIClientProtocol {
     func getHeroes(
         name: String?,
+        page: Int,
         completionBlock: @escaping (Result<CharacterDataContainer, Error>) -> Void
     )
 }
@@ -17,6 +18,7 @@ final class APIClient: APIClientProtocol {
     
     func getHeroes(
         name: String? = nil,
+        page: Int,
         completionBlock: @escaping (Result<CharacterDataContainer, Error>) -> Void
     ) {
         guard var urlComponents = URLComponents(string: Constant.charactersEndpoint) else {
@@ -24,9 +26,15 @@ final class APIClient: APIClientProtocol {
             return
         }
         
+        var queryItems: [URLQueryItem] = [
+            URLQueryItem(name: "page", value: "\(page)")
+        ]
+        
         if let name, !name.isEmpty {
-            urlComponents.queryItems = [URLQueryItem(name: "name", value: name)]
+            queryItems.append(URLQueryItem(name: "name", value: name))
         }
+        
+        urlComponents.queryItems = queryItems
         
         guard let url = urlComponents.url else {
             completionBlock(.failure(URLError(.badURL)))

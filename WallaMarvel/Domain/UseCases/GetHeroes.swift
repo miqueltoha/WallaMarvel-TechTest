@@ -3,6 +3,7 @@ import Foundation
 protocol GetHeroesUseCaseProtocol {
     func execute(
         name: String?,
+        page: Int,
         completionBlock: @escaping (Result<CharacterDataContainer, Error>) -> Void
     ) 
 }
@@ -16,8 +17,9 @@ struct GetHeroes: GetHeroesUseCaseProtocol {
     
     func execute(
         name: String?,
+        page: Int,
         completionBlock: @escaping (Result<CharacterDataContainer, Error>) -> Void
     ) {
-        repository.getHeroes(name: name, completionBlock: completionBlock)
+        repository.getHeroes(name: name, page: page, completionBlock: completionBlock)
     }
 }
