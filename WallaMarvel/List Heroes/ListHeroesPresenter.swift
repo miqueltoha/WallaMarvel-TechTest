@@ -3,7 +3,7 @@ import Foundation
 protocol ListHeroesPresenterProtocol: AnyObject {
     var ui: ListHeroesUI? { get set }
     func screenTitle() -> String
-    func getHeroes()
+    func getHeroes(name: String?)
 }
 
 protocol ListHeroesUI: AnyObject {
@@ -19,19 +19,22 @@ final class ListHeroesPresenter: ListHeroesPresenterProtocol {
     }
     
     func screenTitle() -> String {
-        "List of Heroes"
+        "Characters"
     }
     
     // MARK: UseCases
     
-    func getHeroes() {
-        getHeroesUseCase.execute { [weak self] result in
-            switch result {
-            case .success(let characterDataContainer):
-                self?.ui?.update(heroes: characterDataContainer.characters)
-
-            case .failure(let error):
-                print("Failed loading characters:", error)
+    func getHeroes(name: String? = nil) {
+        getHeroesUseCase.execute(name: name) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let characterDataContainer):
+                    self?.ui?.update(heroes: characterDataContainer.characters)
+                    
+                case .failure(let error):
+                    print("Failed loading characters:", error)
+                    self?.ui?.update(heroes: [])
+                }
             }
         }
     }

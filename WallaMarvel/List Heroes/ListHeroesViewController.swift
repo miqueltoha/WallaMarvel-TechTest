@@ -5,21 +5,35 @@ final class ListHeroesViewController: UIViewController {
     
     var presenter: ListHeroesPresenterProtocol?
     var listHeroesProvider: ListHeroesAdapter?
+    private let searchController = UISearchController(searchResultsController: nil)
     
     override func loadView() {
         view = ListHeroesView()
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         listHeroesProvider = ListHeroesAdapter(tableView: mainView.heroesTableView)
-        presenter?.getHeroes()
+        presenter?.getHeroes(name: nil)
         presenter?.ui = self
         
         title = presenter?.screenTitle()
         
         mainView.heroesTableView.delegate = self
+        configureSearchController()
     }
+    
+    private func configureSearchController() {
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search character"
+        searchController.searchBar.sizeToFit()
+        
+        mainView.heroesTableView.tableHeaderView = searchController.searchBar
+        
+        definesPresentationContext = true
+    }
+
 }
 
 extension ListHeroesViewController: ListHeroesUI {
@@ -31,12 +45,25 @@ extension ListHeroesViewController: ListHeroesUI {
 extension ListHeroesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-
+        
         guard let character = listHeroesProvider?.heroes[indexPath.row] else {
             return
         }
-
+        
         let detailViewController = CharacterDetailViewController(character: character)
         navigationController?.pushViewController(detailViewController, animated: true)
+    }
+}
+
+extension ListHeroesViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        let text = searchController.searchBar.text?
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+
+        if let text, !text.isEmpty {
+            presenter?.getHeroes(name: text)
+        } else {
+            presenter?.getHeroes(name: nil)
+        }
     }
 }

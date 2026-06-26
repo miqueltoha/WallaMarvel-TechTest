@@ -1,17 +1,23 @@
 import Foundation
 
 protocol GetHeroesUseCaseProtocol {
-    func execute(completionBlock: @escaping (Result<CharacterDataContainer, Error>) -> Void)
+    func execute(
+        name: String?,
+        completionBlock: @escaping (Result<CharacterDataContainer, Error>) -> Void
+    ) 
 }
 
 struct GetHeroes: GetHeroesUseCaseProtocol {
     private let repository: MarvelRepositoryProtocol
-  
+    
     init(repository: MarvelRepositoryProtocol = MarvelRepository()) {
         self.repository = repository
     }
-  
-    func execute(completionBlock: @escaping (Result<CharacterDataContainer, Error>) -> Void) {
-        repository.getHeroes(completionBlock: completionBlock)
+    
+    func execute(
+        name: String?,
+        completionBlock: @escaping (Result<CharacterDataContainer, Error>) -> Void
+    ) {
+        repository.getHeroes(name: name, completionBlock: completionBlock)
     }
 }
