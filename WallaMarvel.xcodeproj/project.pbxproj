@@ -28,6 +28,7 @@
 		C168E6CC2FEE804C00124C02 /* CharacterDataContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C168E6CB2FEE804C00124C02 /* CharacterDataContainer.swift */; };
 		C168E6CE2FEE808D00124C02 /* PageInfoDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C168E6CD2FEE808D00124C02 /* PageInfoDataModel.swift */; };
 		C168E6D02FEE80E000124C02 /* CharacterLocationDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C168E6CF2FEE80E000124C02 /* CharacterLocationDataModel.swift */; };
+		C168E6D22FEE85DB00124C02 /* CharacterDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C168E6D12FEE85DB00124C02 /* CharacterDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,7 @@
 		C168E6CB2FEE804C00124C02 /* CharacterDataContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDataContainer.swift; sourceTree = "<group>"; };
 		C168E6CD2FEE808D00124C02 /* PageInfoDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageInfoDataModel.swift; sourceTree = "<group>"; };
 		C168E6CF2FEE80E000124C02 /* CharacterLocationDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterLocationDataModel.swift; sourceTree = "<group>"; };
+		C168E6D12FEE85DB00124C02 /* CharacterDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,6 +172,7 @@
 		1A821EC52862FD500024D397 /* Detail Heroe */ = {
 			isa = PBXGroup;
 			children = (
+				C168E6D12FEE85DB00124C02 /* CharacterDetailViewController.swift */,
 			);
 			path = "Detail Heroe";
 			sourceTree = "<group>";
@@ -350,6 +353,7 @@
 				C168E6CC2FEE804C00124C02 /* CharacterDataContainer.swift in Sources */,
 				C168E6CE2FEE808D00124C02 /* PageInfoDataModel.swift in Sources */,
 				1A0E3A9D2862F7E200132FCB /* ListHeroesViewController.swift in Sources */,
+				C168E6D22FEE85DB00124C02 /* CharacterDetailViewController.swift in Sources */,
 				1AC0347F2863214900E93178 /* GetHeroes.swift in Sources */,
 				1A7B9BBD286D81AA00EBC1A6 /* CharacterDataModel.swift in Sources */,
 				1A0E3A992862F7E200132FCB /* AppDelegate.swift in Sources */,
