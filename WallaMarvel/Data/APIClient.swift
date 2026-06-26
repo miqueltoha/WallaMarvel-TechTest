@@ -5,42 +5,44 @@ protocol APIClientProtocol {
 }
 
 final class APIClient: APIClientProtocol {
-    enum Constant {
-        static let privateKey = "188f9a5aa76846d907c41cbea6506e4cc455293f"
-        static let publicKey = "d575c26d5c746f623518e753921ac847"
+
+    private enum Constant {
+        static let charactersEndpoint = "https://rickandmortyapi.com/api/character"
     }
-    
+
     init() { }
-  
+
     func getHeroes(completionBlock: @escaping (Result<CharacterDataContainer, Error>) -> Void) {
-        let ts = String(Int(Date().timeIntervalSince1970))
-        let privateKey = Constant.privateKey
-        let publicKey = Constant.publicKey
-        let hash = "\(ts)\(privateKey)\(publicKey)".md5
-        let parameters: [String: String] = ["apikey": publicKey,
-                                            "ts": ts,
-                                            "hash": hash]
-        
-        let endpoint = "https://gateway.marvel.com:443/v1/public/characters"
-        var urlComponent = URLComponents(string: endpoint)
-        urlComponent?.queryItems = parameters.map { (key, value) in
-            URLQueryItem(name: key, value: value)
+        guard let url = URL(string: Constant.charactersEndpoint) else {
+            completionBlock(.failure(URLError(.badURL)))
+            return
         }
-        
-        let urlRequest = URLRequest(url: urlComponent!.url!)
+
+        let urlRequest = URLRequest(url: url)
+
         URLSession.shared.dataTask(with: urlRequest) { data, response, error in
-            guard let data = data else {
-                print("No data received:", error ?? "Unknown error")
+            if let error {
+                completionBlock(.failure(error))
                 return
             }
-        
+
+            guard let httpResponse = response as? HTTPURLResponse,
+                  (200...299).contains(httpResponse.statusCode) else {
+                completionBlock(.failure(URLError(.badServerResponse)))
+                return
+            }
+
+            guard let data else {
+                completionBlock(.failure(URLError(.badServerResponse)))
+                return
+            }
+
             do {
                 let dataModel = try JSONDecoder().decode(CharacterDataContainer.self, from: data)
                 completionBlock(.success(dataModel))
             } catch {
-                print("Decoding error:", error)
                 if let rawResponse = String(data: data, encoding: .utf8) {
-                  print("Raw response:", rawResponse)
+                    print("Raw response:", rawResponse)
                 }
                 completionBlock(.failure(error))
             }
