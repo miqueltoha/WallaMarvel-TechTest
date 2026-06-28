@@ -8,6 +8,7 @@
 import XCTest
 @testable import WallaMarvel
 
+@MainActor
 final class ListHeroesPresenterTests: XCTestCase {
     
     func test_getHeroes_whenUseCaseSucceeds_updatesUIWithCharacters() {

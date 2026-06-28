@@ -1,25 +1,25 @@
 import Foundation
 
-protocol MarvelRepositoryProtocol {
+import Foundation
+
+protocol MarvelRepositoryProtocol: Sendable {
     func getHeroes(
         name: String?,
-        page: Int,
-        completionBlock: @escaping (Result<CharacterDataContainer, Error>) -> Void
-    )
+        page: Int
+    ) async throws -> CharacterDataContainer
 }
 
 final class MarvelRepository: MarvelRepositoryProtocol {
     private let dataSource: MarvelDataSourceProtocol
-    
+
     init(dataSource: MarvelDataSourceProtocol = MarvelDataSource()) {
         self.dataSource = dataSource
     }
-    
+
     func getHeroes(
         name: String?,
-        page: Int,
-        completionBlock: @escaping (Result<CharacterDataContainer, Error>) -> Void
-    ) {
-        dataSource.getHeroes(name: name, page: page, completionBlock: completionBlock)
+        page: Int
+    ) async throws -> CharacterDataContainer {
+        try await dataSource.getHeroes(name: name, page: page)
     }
 }

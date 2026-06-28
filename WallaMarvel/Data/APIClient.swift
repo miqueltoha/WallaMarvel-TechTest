@@ -1,11 +1,7 @@
 import Foundation
 
-protocol APIClientProtocol {
-    func getHeroes(
-        name: String?,
-        page: Int,
-        completionBlock: @escaping (Result<CharacterDataContainer, Error>) -> Void
-    )
+protocol APIClientProtocol: Sendable {
+    func getHeroes(name: String?, page: Int) async throws -> CharacterDataContainer
 }
 
 final class APIClient: APIClientProtocol {
@@ -16,65 +12,36 @@ final class APIClient: APIClientProtocol {
     
     init() { }
     
-    func getHeroes(
-        name: String? = nil,
-        page: Int,
-        completionBlock: @escaping (Result<CharacterDataContainer, Error>) -> Void
-    ) {
+    func getHeroes(name: String? = nil, page: Int) async throws -> CharacterDataContainer {
         guard var urlComponents = URLComponents(string: Constant.charactersEndpoint) else {
-            completionBlock(.failure(URLError(.badURL)))
-            return
+            throw URLError(.badURL)
         }
         
         var queryItems: [URLQueryItem] = [
             URLQueryItem(name: "page", value: "\(page)")
         ]
         
-        if let name, !name.isEmpty {
-            queryItems.append(URLQueryItem(name: "name", value: name))
+        let trimmedName = name?.trimmingCharacters(in: .whitespacesAndNewlines)
+        if let trimmedName, !trimmedName.isEmpty {
+            queryItems.append(URLQueryItem(name: "name", value: trimmedName))
         }
         
         urlComponents.queryItems = queryItems
         
         guard let url = urlComponents.url else {
-            completionBlock(.failure(URLError(.badURL)))
-            return
+            throw URLError(.badURL)
         }
         
-        let urlRequest = URLRequest(url: url)
+        let (data, response) = try await URLSession.shared.data(from: url)
         
-        URLSession.shared.dataTask(with: urlRequest) { data, response, error in
-            if let error {
-                completionBlock(.failure(error))
-                return
-            }
-            
-            guard let httpResponse = response as? HTTPURLResponse else {
-                completionBlock(.failure(URLError(.badServerResponse)))
-                return
-            }
-            
-            if httpResponse.statusCode == 404 {
-                completionBlock(.failure(URLError(.fileDoesNotExist)))
-                return
-            }
-            
-            guard (200...299).contains(httpResponse.statusCode) else {
-                completionBlock(.failure(URLError(.badServerResponse)))
-                return
-            }
-            
-            guard let data else {
-                completionBlock(.failure(URLError(.badServerResponse)))
-                return
-            }
-            
-            do {
-                let dataModel = try JSONDecoder().decode(CharacterDataContainer.self, from: data)
-                completionBlock(.success(dataModel))
-            } catch {
-                completionBlock(.failure(error))
-            }
-        }.resume()
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw URLError(.badServerResponse)
+        }
+        
+        guard (200...299).contains(httpResponse.statusCode) else {
+            throw URLError(.badServerResponse)
+        }
+        
+        return try JSONDecoder().decode(CharacterDataContainer.self, from: data)
     }
 }

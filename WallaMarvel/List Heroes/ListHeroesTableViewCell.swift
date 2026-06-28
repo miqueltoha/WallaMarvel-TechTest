@@ -58,15 +58,24 @@ final class ListHeroesTableViewCell: UITableViewCell {
     
     func configure(model: CharacterDataModel) {
         heroeName.text = model.name
+        heroeImageView.image = UIImage(systemName: "photo")
+        heroeImageView.kf.indicatorType = .activity
         
         guard let url = URL(string: model.image) else {
-            heroeImageView.image = nil
+            heroeImageView.image = UIImage(systemName: "photo")
             return
         }
         
-        heroeImageView.kf.setImage(with: url)
+        heroeImageView.kf.setImage(
+            with: url,
+            placeholder: UIImage(systemName: "photo"),
+            options: [
+                .transition(.fade(0.2)),
+                .cacheOriginalImage,
+                .retryStrategy(DelayRetryStrategy(maxRetryCount: 2, retryInterval: .seconds(1)))
+            ]
+        )
         
-        // Accessibility
         isAccessibilityElement = true
         accessibilityLabel = "\(model.name), \(model.species), \(model.status)"
         accessibilityTraits = .button

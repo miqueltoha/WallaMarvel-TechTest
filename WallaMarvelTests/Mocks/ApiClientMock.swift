@@ -8,19 +8,19 @@
 import Foundation
 @testable import WallaMarvel
 
-final class APIClientMock: APIClientProtocol {
+final class APIClientMock: APIClientProtocol, @unchecked Sendable {
 
-    var result: Result<CharacterDataContainer, Error>?
+    var result: Result<CharacterDataContainer, Error> = .success(.mock())
 
     func getHeroes(
         name: String?,
-        page: Int,
-        completionBlock: @escaping (Result<CharacterDataContainer, Error>) -> Void
-    ) {
-        guard let result else {
-            fatalError("Result not configured")
+        page: Int
+    ) async throws -> CharacterDataContainer {
+        switch result {
+        case .success(let container):
+            return container
+        case .failure(let error):
+            throw error
         }
-
-        completionBlock(result)
     }
 }
