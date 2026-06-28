@@ -25,7 +25,7 @@ The original implementation crashed during decoding because it relied on:
 * `try!`
 * Force unwrapping (`!`)
 
-When the Marvel API returned an unexpected payload, the application terminated with a `DecodingError.keyNotFound`.
+When the Marvel API returned an unexpected payload, the application terminated with a `DecodingError`.
 
 ### Architecture observations
 
@@ -39,19 +39,22 @@ When the Marvel API returned an unexpected payload, the application terminated w
 ## Implemented Changes
 
 * ✅ Replaced the Marvel API with the Rick and Morty API.
-* ✅ Introduced safe networking using `Result`.
+* ✅ Migrated the networking layer to Swift Concurrency (`async/await`).
+* ✅ Adopted Swift 6 concurrency (`@MainActor`, `Sendable`).
 * ✅ Removed force unwrapping and `try!`.
 * ✅ Added proper HTTP and decoding error handling.
 * ✅ Implemented Character Detail screen.
+* ✅ Implemented the Character Detail screen using SwiftUI while keeping the rest of the application in UIKit.
 * ✅ Added character search.
 * ✅ Added infinite pagination.
+* ✅ Added image placeholders for missing resources.
 * ✅ Added Presenter unit tests using mocks.
 
 ---
 
 ## Architecture
 
-The existing architecture has been preserved.
+The existing MVP + Clean Architecture has been preserved.
 
 The project follows a layered approach:
 
@@ -63,39 +66,49 @@ The project follows a layered approach:
 
 Dependencies are injected through protocols to improve testability.
 
+The networking flow has been modernized using Swift Concurrency while keeping the original architectural boundaries intact.
+
 ---
 
 ## Testing
 
-Unit tests have been added for the Presenter covering:
+Unit tests cover the Presenter behaviour using mocked dependencies.
+
+Covered scenarios include:
 
 * Successful character loading
 * Error handling
 * Character search
-* Pagination flow
+* Pagination
+* Presenter interaction with the UI
 
-Mocks are used for the Use Case and UI layers to isolate Presenter behaviour.
+Mocks isolate the Presenter from the networking and UI layers.
+
+---
+
+## SwiftUI
+
+The Character Detail screen has been implemented in SwiftUI and integrated into the existing UIKit navigation flow using `UIHostingController`.
+
+This demonstrates interoperability between UIKit and SwiftUI while following a progressive migration strategy.
 
 ---
 
 ## Possible Future Improvements
 
-* Loading indicator during pagination.
-* Dedicated empty and error states.
-* APIClient unit tests.
-* Image placeholders and retry strategy.
+* Pull-to-refresh.
+* Offline persistence.
+* Image prefetching.
+* Snapshot/UI tests.
 * Accessibility improvements.
+* Complete migration of the presentation layer to SwiftUI.
+
+---
 
 ## Notes
 
-The goal of this implementation was to preserve the original project structure while improving robustness, testability and functionality with the minimum architectural impact.
+The goal of this implementation was to preserve the original project structure while significantly improving robustness, modernizing the networking layer, increasing testability and implementing the requested features with minimal architectural impact.
 
 ## Decisions
 
-I decided to preserve the existing MVP + Clean Architecture instead of replacing it with another architecture because I considered it more valuable to improve robustness, testability and requested features while minimizing unnecessary structural changes.
-
-## Concurrency
-
-The project currently keeps the original callback-based networking approach to preserve the existing architecture and minimize unnecessary changes.
-
-A future improvement would be migrating the networking layer and use cases to Swift Concurrency (`async/await`) and enabling strict concurrency checks once the architecture boundaries are fully adapted.
+Rather than replacing the existing architecture, I chose to preserve the original MVP + Clean Architecture and modernize it incrementally by introducing Swift Concurrency, improving error handling, adding unit tests and integrating SwiftUI where it provided the greatest value.
