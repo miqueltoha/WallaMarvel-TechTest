@@ -25,6 +25,14 @@ final class ListHeroesTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        heroeImageView.kf.cancelDownloadTask()
+        heroeImageView.image = nil
+        heroeName.text = nil
+    }
+    
     private func setup() {
         addSubviews()
         addContraints()
@@ -41,7 +49,7 @@ final class ListHeroesTableViewCell: UITableViewCell {
             heroeImageView.topAnchor.constraint(equalTo: topAnchor, constant: 12),
             heroeImageView.heightAnchor.constraint(equalToConstant: 80),
             heroeImageView.widthAnchor.constraint(equalToConstant: 80),
-            heroeImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12),
+            heroeImageView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -12),
             
             heroeName.leadingAnchor.constraint(equalTo: heroeImageView.trailingAnchor, constant: 12),
             heroeName.topAnchor.constraint(equalTo: heroeImageView.topAnchor, constant: 8),
@@ -49,7 +57,27 @@ final class ListHeroesTableViewCell: UITableViewCell {
     }
     
     func configure(model: CharacterDataModel) {
-        heroeImageView.kf.setImage(with: URL(string: model.thumbnail.path + "/portrait_small." + model.thumbnail.extension))
         heroeName.text = model.name
+        heroeImageView.image = UIImage(systemName: "photo")
+        heroeImageView.kf.indicatorType = .activity
+        
+        guard let url = URL(string: model.image) else {
+            heroeImageView.image = UIImage(systemName: "photo")
+            return
+        }
+        
+        heroeImageView.kf.setImage(
+            with: url,
+            placeholder: UIImage(systemName: "photo"),
+            options: [
+                .transition(.fade(0.2)),
+                .cacheOriginalImage,
+                .retryStrategy(DelayRetryStrategy(maxRetryCount: 2, retryInterval: .seconds(1)))
+            ]
+        )
+        
+        isAccessibilityElement = true
+        accessibilityLabel = "\(model.name), \(model.species), \(model.status)"
+        accessibilityTraits = .button
     }
 }
